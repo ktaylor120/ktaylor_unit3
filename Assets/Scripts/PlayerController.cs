@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float gravityModifer;
     public float jumpForce;
     private bool isGrounded = true;
+    public bool gameOver = false;
 
     void Start()
     {
@@ -16,7 +18,6 @@ public class PlayerController : MonoBehaviour
         //Same //Physics.gravity = Physics.gravity * gravityModifer;
     }
 
-    // Update is called once per frame
     void Update()
     {
         bool spaceDown = Input.GetKey(KeyCode.Space);
@@ -29,7 +30,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
-
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+        else if(collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Game Over!");
+            gameOver = true;
+        }
     }
 }

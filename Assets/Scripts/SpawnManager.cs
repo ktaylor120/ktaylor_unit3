@@ -6,19 +6,20 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject obsPrefab;
     private Vector3 spawnPos = new Vector3(30,0,0);
+    private PlayerController playerCtrl;
     void Start()
     {
         InvokeRepeating("SpawnObs", 2, 2);
+        playerCtrl = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
-
-    void Update()
-    {
-        
-    }
     
     void SpawnObs()
     {
-        Instantiate(obsPrefab, spawnPos, obsPrefab.transform.rotation);
+        if (playerCtrl.gameOver == false)
+        {
+            Instantiate(obsPrefab, spawnPos, obsPrefab.transform.rotation);
+
+        }
     }
 }
